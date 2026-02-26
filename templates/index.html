@@ -12,7 +12,7 @@
             <button type="submit">Add</button>
         </form>
         <ul>
-            {% for todo in todo_list %} # jinja2の構文
+            {% for todo in todo_list %}
             <li>
                 {{ todo.title }}
                 <form method="POST" action="/delete/{{ todo.id }}">
