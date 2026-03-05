@@ -5,9 +5,13 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
 db = SQLAlchemy(app)
 
+### モデルクラス ###
+# db.Modelを継承して、Todoクラスを作成
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
+    time_slot = db.Column(db.String(20), default="未分類")
+    completed = db.Column(db.Boolean, default=False)
 
 ### タスクを表示する　###
 # DBから全てのtodoレコードを取得し、index.htmlテンプレートに渡す
@@ -40,5 +44,8 @@ def delete(todo_id):
 if __name__ == "__main__":
     # まだDBがなければ作る
     with app.app_context():
+        # 既存のテーブルを削除して再作成（開発環境用）
+        # 本番環境ではマイグレーション機能（Flask-Migrate）を使用しないといけない
+        db.drop_all()
         db.create_all()
     app.run(debug=True)

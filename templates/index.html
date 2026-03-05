@@ -2,15 +2,20 @@
 <html>
 <head>
     <title>Todo App</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <div class="container">
         <h1>Todoアプリ</h1>
+
+        <!-- タスク追加フォーム -->
         <form method="POST" action="/add">
             <input type="text" name="title" id="title" placeholder="Add Todo" required>
             <button type="submit">Add</button>
         </form>
+
+        <!-- タスク一覧 -->
+        <h2>タスク一覧</h2>
         <ul>
             {% for todo in todo_list %}
             <li>
