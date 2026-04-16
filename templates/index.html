@@ -1,31 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
+    <meta charset="UTF-8">
     <title>Todo App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/main.js" defer></script>
 </head>
+
 <body>
     <div class="container">
         <h1>Todoアプリ</h1>
 
         <!-- タスク追加フォーム -->
-        <form method="POST" action="/add">
-            <input type="text" name="title" id="title" placeholder="Add Todo" required>
+        <form id="add-form">
+            <input type="text" id="title" name="title" placeholder="Add Todo" required>
             <button type="submit">Add</button>
         </form>
 
+        <!-- スクロール先 -->
+        <h2 id="morning">朝(8:00-12:00)</h2>
+        <h2 id="afternoon">昼(12:00-18:00)</h2>
+        <h2 id="night">夜(18:00-24:00)</h2>
+
         <!-- タスク一覧 -->
         <h2>タスク一覧</h2>
-        <ul>
-            {% for todo in todo_list %}
-            <li>
-                {{ todo.title }}
-                <form method="POST" action="/delete/{{ todo.id }}">
-                    <button type="submit">Delete</button>
+        <ul id="todo-list">
+            <!-- 初期表示用サンプル（後でJS/Flask側で差し替え） -->
+            <li data-todo-id="1">
+                <span class="todo-main">サンプル1 (朝)</span>
+
+                <!-- タスク移動ボタン -->
+                <form class="move-form" style="display:inline;">
+                    <input type="hidden" name="slot" value="朝">
+                    <button type="button" class="move-btn" data-slot="朝" data-todo-id="1">朝</button>
+                </form>
+                <form class="move-form" style="display:inline;">
+                    <input type="hidden" name="slot" value="昼">
+                    <button type="button" class="move-btn" data-slot="昼" data-todo-id="1">昼</button>
+                </form>
+                <form class="move-form" style="display:inline;">
+                    <input type="hidden" name="slot" value="夜">
+                    <button type="button" class="move-btn" data-slot="夜" data-todo-id="1">夜</button>
+                </form>
+
+                <!-- 削除ボタン -->
+                <form class="delete-form" style="display:inline;">
+                    <button type="button" class="delete-btn" data-todo-id="1">Delete</button>
                 </form>
             </li>
-            {% endfor %}
+
+            <li data-todo-id="2">
+                <span class="todo-main">サンプル2 (昼)</span>
+
+                <form class="move-form" style="display:inline;">
+                    <input type="hidden" name="slot" value="朝">
+                    <button type="button" class="move-btn" data-slot="朝" data-todo-id="2">朝</button>
+                </form>
+                <form class="move-form" style="display:inline;">
+                    <input type="hidden" name="slot" value="昼">
+                    <button type="button" class="move-btn" data-slot="昼" data-todo-id="2">昼</button>
+                </form>
+                <form class="move-form" style="display:inline;">
+                    <input type="hidden" name="slot" value="夜">
+                    <button type="button" class="move-btn" data-slot="夜" data-todo-id="2">夜</button>
+                </form>
+
+                <form class="delete-form" style="display:inline;">
+                    <button type="button" class="delete-btn" data-todo-id="2">Delete</button>
+                </form>
+            </li>
         </ul>
     </div>
+
 </body>
 </html>

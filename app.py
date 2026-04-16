@@ -41,6 +41,18 @@ def delete(todo_id):
     db.session.commit()
     return redirect(url_for("home"))
 
+@app.route("/move/<int:todo_id>", methods=["POST"])
+def move(todo_id):
+    slot = request.form.get("slot")
+    if slot not in ["朝", "昼", "夜"]:
+        return redirect(url_for("home"))
+
+    todo = Todo.query.filter_by(id=todo_id).first()
+    if todo:
+        todo.time_slot = slot
+        db.session.commit()
+    return redirect(url_for("home"))
+
 if __name__ == "__main__":
     # まだDBがなければ作る
     with app.app_context():
