@@ -14,9 +14,17 @@
 
         <!-- タスク追加フォーム -->
         <form id="add-form">
-            <input type="text" id="title" name="title" placeholder="Add Todo" required>
-            <button type="submit">Add</button>
+            <input type="text" id="title" name="title" placeholder="やることを入力" required>
+            <button type="submit" id="add-button">Add</button>
         </form>
+
+        <!-- タスク一覧 -->
+        <h2>未分類のタスク</h2>
+        <ul id="inbox">
+            <li id="inbox-list"></li>
+        </ul>
+
+
 
         <!-- スクロール先 -->
         <h2 id="morning">朝(8:00-12:00)</h2>
