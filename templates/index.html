@@ -20,64 +20,21 @@
 
         <!-- タスク一覧 -->
         <h2>未分類のタスク</h2>
-        <ul id="inbox">
-            <li id="inbox-list"></li>
-        </ul>
+        <ul id="taskList"></ul>
 
 
 
         <!-- スクロール先 -->
         <h2 id="morning">朝(8:00-12:00)</h2>
+        <ul id="morningList"></ul>
         <h2 id="afternoon">昼(12:00-18:00)</h2>
+        <ul id="afternoonList"></ul>
         <h2 id="night">夜(18:00-24:00)</h2>
+        <ul id="nightList"></ul>
 
-        <!-- タスク一覧 -->
-        <h2>タスク一覧</h2>
-        <ul id="todo-list">
-            <!-- 初期表示用サンプル（後でJS/Flask側で差し替え） -->
-            <li data-todo-id="1">
-                <span class="todo-main">サンプル1 (朝)</span>
+        <h2>完了したタスク</h2>
+        <ul id="doneList"></ul>
 
-                <!-- タスク移動ボタン -->
-                <form class="move-form" style="display:inline;">
-                    <input type="hidden" name="slot" value="朝">
-                    <button type="button" class="move-btn" data-slot="朝" data-todo-id="1">朝</button>
-                </form>
-                <form class="move-form" style="display:inline;">
-                    <input type="hidden" name="slot" value="昼">
-                    <button type="button" class="move-btn" data-slot="昼" data-todo-id="1">昼</button>
-                </form>
-                <form class="move-form" style="display:inline;">
-                    <input type="hidden" name="slot" value="夜">
-                    <button type="button" class="move-btn" data-slot="夜" data-todo-id="1">夜</button>
-                </form>
-
-                <!-- 削除ボタン -->
-                <form class="delete-form" style="display:inline;">
-                    <button type="button" class="delete-btn" data-todo-id="1">Delete</button>
-                </form>
-            </li>
-
-            <li data-todo-id="2">
-                <span class="todo-main">サンプル2 (昼)</span>
-
-                <form class="move-form" style="display:inline;">
-                    <input type="hidden" name="slot" value="朝">
-                    <button type="button" class="move-btn" data-slot="朝" data-todo-id="2">朝</button>
-                </form>
-                <form class="move-form" style="display:inline;">
-                    <input type="hidden" name="slot" value="昼">
-                    <button type="button" class="move-btn" data-slot="昼" data-todo-id="2">昼</button>
-                </form>
-                <form class="move-form" style="display:inline;">
-                    <input type="hidden" name="slot" value="夜">
-                    <button type="button" class="move-btn" data-slot="夜" data-todo-id="2">夜</button>
-                </form>
-
-                <form class="delete-form" style="display:inline;">
-                    <button type="button" class="delete-btn" data-todo-id="2">Delete</button>
-                </form>
-            </li>
         </ul>
     </div>
 

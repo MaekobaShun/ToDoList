@@ -24,24 +24,75 @@ function night(task){
 }
 */
 
-// addボタンを押したとき
-function addTask(event){
+// フォーム送信時（Add クリック・Enter）
+function addTask(event) {
     event.preventDefault();
+
+    // 入力内容の取得
     const input_element = document.querySelector("#title");
     const text = input_element.value.trim();
-    const taskList = document.querySelector("#inbox");
-
-    // テキストが空の場合は何もしない
-    if (text === ""){
+    if (text === "") {
         return;
     }
+    // タスクを追加する枠を作る
+    const taskItem = document.createElement("li");
 
-    const newList = document.createElement("li");
-    newList.textContent = text;
+    // 入力内容のテキストを表示する場所を追加
+    const taskText = document.createElement("p");
+    taskText.textContent = text;
+    taskItem.append(taskText);
 
-    taskList.append(newList);
+    // 朝昼夜ボタンの追加
+    timeboxingButtons(taskItem);
+
+    // 完了ボタンと削除ボタンの追加
+    OrganizationButtons(taskItem);
+
+    // 作った要素を宿題リストに追加する
+    const taskList = document.querySelector("#taskList");
+    taskList.append(taskItem);
+
     input_element.value = "";
 }
 
-let add_button = document.querySelector("button");
-add_button.addEventListener("click", addTask);
+// 朝昼夜ボタンの追加
+function timeboxingButtons(taskItem) {
+    const slots = [
+        { label: "朝", listSelector: "#morningList" },
+        { label: "昼", listSelector: "#afternoonList" },
+        { label: "夜", listSelector: "#nightList" },
+    ];
+
+    for (const { label, listSelector } of slots) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = label;
+        btn.addEventListener("click", () => {
+            document.querySelector(listSelector).append(taskItem);
+        });
+        taskItem.append(btn);
+    }
+}
+
+// 完了ボタンと削除ボタンの追加
+function OrganizationButtons(taskItem){
+    // 完了ボタンを作って追加する
+    const doneButton = document.createElement("button");
+    doneButton.textContent = "完了";
+    doneButton.addEventListener("click", ()=>{
+        document.querySelector("#doneList").append(taskItem);
+    })
+    taskItem.append(doneButton);
+
+    // 削除ボタンを作って追加する
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "削除";
+    deleteButton.addEventListener("click", (event)=>{
+        const taskItem =event.target.parentElement;
+        taskItem.remove();
+    })
+    taskItem.append(deleteButton);
+}
+
+const addForm = document.querySelector("#add-form");
+addForm.addEventListener("submit", addTask);
