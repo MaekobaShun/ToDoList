@@ -77,16 +77,23 @@ function timeboxingButtons(taskItem) {
 // 完了ボタンと削除ボタンの追加
 function OrganizationButtons(taskItem){
     // 完了ボタンを作って追加する
-    const doneButton = document.createElement("button");
-    doneButton.textContent = "完了";
-    doneButton.addEventListener("click", ()=>{
-        document.querySelector("#doneList").append(taskItem);
-    })
-    taskItem.append(doneButton);
+    const doneCheckbox = document.createElement("input");
+    doneCheckbox.type = "checkbox";
+
+    doneCheckbox.addEventListener("change", ()=>{
+        if(doneCheckbox.checked){
+            doneList = document.querySelector("#doneList");
+            doneList.append(taskItem);
+        }else{
+            taskList = document.querySelector("#taskList");
+            taskList.append(taskItem);
+        }
+    });
+    taskItem.prepend(doneCheckbox);
 
     // 削除ボタンを作って追加する
     const deleteButton = document.createElement("button");
-    deleteButton.textContent = "削除";
+    deleteButton.textContent = "🗑";
     deleteButton.addEventListener("click", (event)=>{
         const taskItem =event.target.parentElement;
         taskItem.remove();

@@ -57,6 +57,17 @@ button:hover {
     background-color: #e04040;
 }
 
+.icon-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    font-size: 18px;
+    line-height: 1;
+}
+
 
 ul {
     list-style: none;
