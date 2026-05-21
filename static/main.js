@@ -36,9 +36,11 @@ function addTask(event) {
     }
     // タスクを追加する枠を作る
     const taskItem = document.createElement("li");
+    taskItem.className = "task-item";
 
     // 入力内容のテキストを表示する場所を追加
     const taskText = document.createElement("p");
+    taskText.className = "task-text";
     taskText.textContent = text;
     taskItem.append(taskText);
 
@@ -58,14 +60,15 @@ function addTask(event) {
 // 朝昼夜ボタンの追加
 function timeboxingButtons(taskItem) {
     const slots = [
-        { label: "朝", listSelector: "#morningList" },
-        { label: "昼", listSelector: "#afternoonList" },
-        { label: "夜", listSelector: "#nightList" },
+        { label: "☀️", listSelector: "#morningList" },
+        { label: "🕛", listSelector: "#afternoonList" },
+        { label: "🌙", listSelector: "#nightList" },
     ];
 
     for (const { label, listSelector } of slots) {
         const btn = document.createElement("button");
         btn.type = "button";
+        btn.className = "slot-btn";
         btn.textContent = label;
         btn.addEventListener("click", () => {
             document.querySelector(listSelector).append(taskItem);
@@ -79,6 +82,7 @@ function OrganizationButtons(taskItem){
     // 完了ボタンを作って追加する
     const doneCheckbox = document.createElement("input");
     doneCheckbox.type = "checkbox";
+    doneCheckbox.className = "task-done";
 
     doneCheckbox.addEventListener("change", ()=>{
         if(doneCheckbox.checked){
@@ -93,6 +97,8 @@ function OrganizationButtons(taskItem){
 
     // 削除ボタンを作って追加する
     const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.className = "delete-btn";
     deleteButton.textContent = "🗑";
     deleteButton.addEventListener("click", (event)=>{
         const taskItem =event.target.parentElement;

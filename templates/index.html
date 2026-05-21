@@ -24,18 +24,29 @@
 
 
 
-        <!-- スクロール先 -->
-        <h2 id="morning">朝(8:00-12:00)</h2>
+        <!--朝のグループ-->
+        <div class="flex-container">
+            <h2 id="morning">朝(8:00-12:00)</h2>
+            <button type="button" id="morning-add-task">+</button>
+        </div>
         <ul id="morningList"></ul>
-        <h2 id="afternoon">昼(12:00-18:00)</h2>
+
+        <!--昼のグループ-->
+        <div class="flex-container">
+            <h2 id="afternoon">昼(12:00-18:00)</h2>
+            <button type="button" id="afternoon-add-task">+</button>
+        </div>
         <ul id="afternoonList"></ul>
-        <h2 id="night">夜(18:00-24:00)</h2>
+
+        <!--夜のグループ-->
+        <div class="flex-container">
+            <h2 id="night">夜(18:00-24:00)</h2>
+            <button type="button" id="night-add-task">+</button>
+        </div>
         <ul id="nightList"></ul>
 
         <h2>完了したタスク</h2>
         <ul id="doneList"></ul>
-
-        </ul>
     </div>
 
 </body>
