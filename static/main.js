@@ -121,15 +121,17 @@ function addTaskToSlot(listSelector){
 
     // インライン入力フォームを入力
     const formItem = document.createElement("li");
-    formItem.className = "inline-add-form";
+    formItem.className = "task-item inline-add-form";
 
     const input = document.createElement("input");
     input.type = "text";
     input.placeholder = "タスクを入力";
+    input.className = "inline-add-input";
 
     const submitBtn = document.createElement("button");
     submitBtn.type = "button";
     submitBtn.textContent = "追加";
+    submitBtn.className = "inline-add-btn";
 
     // タスク追加処理
     const handleAdd = () => {

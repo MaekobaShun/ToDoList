@@ -81,6 +81,32 @@ input[type="text"]:focus {
     background-color: #000;
 }
 
+/* Inline add (slot + button) */
+.inline-add-form {
+    padding: 10px 12px;
+}
+
+.inline-add-form .inline-add-input {
+    padding: 12px 14px;
+}
+
+.inline-add-form .inline-add-btn {
+    padding: 12px 16px;
+    border: none;
+    background-color: #222;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+}
+
+.inline-add-form .inline-add-btn:hover {
+    background-color: #000;
+}
+
 /* Group Headers */
 .flex-container {
     display: flex;
