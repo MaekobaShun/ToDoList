@@ -26,7 +26,8 @@ function night(task){
 
 // フォーム送信時（Add クリック・Enter）
 function addTask(event) {
-    event.preventDefault();
+    // フォーム送信時のページがリロードするのを防ぐ
+    event.preventDefault(); 
 
     // 入力内容の取得
     const input_element = document.querySelector("#title");
@@ -46,7 +47,6 @@ function addTask(event) {
 
     // 朝昼夜ボタンの追加
     timeboxingButtons(taskItem);
-
     // 完了ボタンと削除ボタンの追加
     OrganizationButtons(taskItem);
 
@@ -107,5 +107,68 @@ function OrganizationButtons(taskItem){
     taskItem.append(deleteButton);
 }
 
+
+// +ボタン（時間帯直接追加）
+function addTaskToSlot(listSelector){
+    const list = document.querySelector(listSelector);
+
+    // 入力欄が開いていたら閉じる
+    const existing = list.querySelector(".inline-add-form");
+    if(existing){
+        existing.remove();
+        return;
+    }
+
+    // インライン入力フォームを入力
+    const formItem = document.createElement("li");
+    formItem.className = "inline-add-form";
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "タスクを入力";
+
+    const submitBtn = document.createElement("button");
+    submitBtn.type = "button";
+    submitBtn.textContent = "追加";
+
+    // タスク追加処理
+    const handleAdd = () => {
+        const text = input.value.trim();
+        if(text === "") return;
+
+        const taskItem = document.createElement("li");
+        taskItem.className = "task-item";
+
+        const taskText = document.createElement("p");
+        taskText.className = "task-text";
+        taskText.textContent = text;
+        taskItem.append(taskText);
+
+        timeboxingButtons(taskItem);
+        OrganizationButtons(taskItem);
+
+        list.insertBefore(taskItem, formItem); // 入力欄の直前に挿入
+        formItem.remove();
+    };
+
+    submitBtn.addEventListener("click", handleAdd);
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handleAdd();
+        if (e.key === "Escape") formItem.remove(); // Escで閉じる
+    });
+
+    formItem.append(input, submitBtn);
+    list.append(formItem);
+    input.focus();
+}
+
+
+// 各＋ボタンにイベント登録
+document.querySelector("#morning-add-task")
+    .addEventListener("click", () => addTaskToSlot("#morningList"));
+document.querySelector("#afternoon-add-task")
+    .addEventListener("click", () => addTaskToSlot("#afternoonList"));
+document.querySelector("#night-add-task")
+    .addEventListener("click", () => addTaskToSlot("#nightList"));
 const addForm = document.querySelector("#add-form");
 addForm.addEventListener("submit", addTask);
