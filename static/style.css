@@ -11,7 +11,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 .container {
@@ -161,6 +161,62 @@ ul {
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.01);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.task-item-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    background-color: #ffffff;
+    transition: transform 0.2s ease-out;
+}
+
+.task-item.swiping .task-item-content {
+    transition: none;
+}
+
+.task-swipe-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #ff3b30;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 20px;
+    font-weight: bold;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.task-item.swiping .task-swipe-bg {
+    opacity: 1;
+}
+
+.task-item.swipe-delete .task-item-content {
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s ease-in;
+}
+
+.task-item.swipe-delete {
+    opacity: 0;
+    transform: scaleY(0);
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-width: 0;
+    transition: all 0.3s ease-out 0.3s;
 }
 
 .task-item:hover {
