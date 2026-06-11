@@ -80,6 +80,12 @@ sheetTitle.addEventListener('keydown', (e) => {
 });
 
 // オーバーレイ（上の空白部分）をタッチしたら入力を確定して閉じる
+// touchend を使うことで、iOS でキーボードが出ていても1タップで反応させる
+sheetOverlay.addEventListener('touchend', (e) => {
+    e.preventDefault(); // 後続の click イベントを防いで二重実行を避ける
+    submitBottomSheet();
+});
+// デスクトップ（マウス）用
 sheetOverlay.addEventListener('click', submitBottomSheet);
 
 // ハンドル（上部のバー）はキャンセルして閉じる
