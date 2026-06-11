@@ -60,4 +60,5 @@ if __name__ == "__main__":
         # 本番環境ではマイグレーション機能（Flask-Migrate）を使用しないといけない
         db.drop_all()
         db.create_all()
-    app.run(debug=True)
+    # host="0.0.0.0" で同一Wi-Fi内のスマホからもアクセス可能
+    app.run(debug=True, host="0.0.0.0", port=5000)

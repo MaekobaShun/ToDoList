@@ -245,3 +245,97 @@ ul {
     text-decoration: line-through;
     color: #999;
 }
+
+/* Mobile / touch */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+    padding-bottom: max(40px, env(safe-area-inset-bottom));
+}
+
+input[type="text"] {
+    font-size: 16px;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding-top: max(16px, env(safe-area-inset-top));
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+
+    .container {
+        padding: 24px 16px;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    #add-form {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #add-form button {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .inline-add-form {
+        flex-wrap: wrap;
+    }
+
+    .inline-add-form .inline-add-btn {
+        width: 100%;
+        padding: 14px;
+    }
+
+    .task-item {
+        padding: 12px 14px;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .task-item .slot-btn,
+    .task-item .delete-btn {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 10px;
+        opacity: 1;
+    }
+
+    .flex-container button {
+        width: 44px;
+        height: 44px;
+    }
+
+    .task-item .task-done {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (hover: none) {
+    .task-item .slot-btn,
+    .task-item .delete-btn {
+        opacity: 1;
+    }
+
+    .task-item:hover {
+        transform: none;
+    }
+}

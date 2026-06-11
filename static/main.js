@@ -25,7 +25,7 @@ function night(task){
 */
 
 function makeTaskTextEditable(taskText) {
-    taskText.addEventListener("dblclick", () => {
+    const startEdit = () => {
         const originalText = taskText.textContent;
         const input = document.createElement("input");
         input.type = "text";
@@ -58,7 +58,19 @@ function makeTaskTextEditable(taskText) {
                 finish();
             }
         });
-    });
+    };
+
+    taskText.addEventListener("dblclick", startEdit);
+
+    let pressTimer;
+    taskText.addEventListener("touchstart", (e) => {
+        pressTimer = setTimeout(() => {
+            e.preventDefault();
+            startEdit();
+        }, 500);
+    }, { passive: false });
+    taskText.addEventListener("touchend", () => clearTimeout(pressTimer));
+    taskText.addEventListener("touchmove", () => clearTimeout(pressTimer));
 }
 
 function createTaskText(text) {
@@ -219,6 +231,9 @@ const slotSortableOptions = {
     handle: ".task-text",
     draggable: ".task-item",
     filter: ".inline-add-form",
+    delay: 200,
+    delayOnTouchOnly: true,
+    touchStartThreshold: 3,
 };
 
 for (const [selector, group] of [
