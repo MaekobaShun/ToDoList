@@ -1,7 +1,6 @@
 // ボトムシートの要素
 const sheetOverlay = document.getElementById('bottom-sheet-overlay');
 const bottomSheet = document.getElementById('bottom-sheet');
-const sheetForm = document.getElementById('sheet-form');
 const sheetTaskId = document.getElementById('sheet-task-id');
 const sheetTitle = document.getElementById('sheet-title');
 const sheetDesc = document.getElementById('sheet-description');
@@ -69,11 +68,8 @@ async function submitBottomSheet() {
     hideBottomSheet();
 }
 
-// フォーム送信（上矢印ボタン）
-sheetForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    submitBottomSheet();
-});
+// 上矢印ボタン
+document.getElementById('sheet-submit-btn').addEventListener('click', submitBottomSheet);
 
 // タイトル欄でEnter/確定キーを押したら送信
 sheetTitle.addEventListener('keydown', (e) => {
