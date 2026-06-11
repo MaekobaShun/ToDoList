@@ -178,6 +178,18 @@ ul {
     line-height: 1.4;
 }
 
+#morningList .task-text,
+#afternoonList .task-text,
+#nightList .task-text {
+    cursor: grab;
+}
+
+.task-edit-input {
+    flex: 1;
+    padding: 8px 10px;
+    font-size: 0.95rem;
+}
+
 /* Task Buttons */
 .task-item .slot-btn,
 .task-item .delete-btn {

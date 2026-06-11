@@ -24,10 +24,55 @@ function night(task){
 }
 */
 
+function makeTaskTextEditable(taskText) {
+    taskText.addEventListener("dblclick", () => {
+        const originalText = taskText.textContent;
+        const input = document.createElement("input");
+        input.type = "text";
+        input.value = originalText;
+        input.className = "task-edit-input";
+
+        taskText.replaceWith(input);
+        input.focus();
+        input.select();
+
+        let done = false;
+        const finish = () => {
+            if (done) return;
+            done = true;
+            const newText = document.createElement("p");
+            newText.className = "task-text";
+            newText.textContent = input.value.trim() || originalText;
+            input.replaceWith(newText);
+            makeTaskTextEditable(newText);
+        };
+
+        input.addEventListener("blur", finish, { once: true });
+        input.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                finish();
+            }
+            if (e.key === "Escape") {
+                input.value = originalText;
+                finish();
+            }
+        });
+    });
+}
+
+function createTaskText(text) {
+    const taskText = document.createElement("p");
+    taskText.className = "task-text";
+    taskText.textContent = text;
+    makeTaskTextEditable(taskText);
+    return taskText;
+}
+
 // フォーム送信時（Add クリック・Enter）
 function addTask(event) {
     // フォーム送信時のページがリロードするのを防ぐ
-    event.preventDefault(); 
+    event.preventDefault();
 
     // 入力内容の取得
     const input_element = document.querySelector("#title");
@@ -39,11 +84,7 @@ function addTask(event) {
     const taskItem = document.createElement("li");
     taskItem.className = "task-item";
 
-    // 入力内容のテキストを表示する場所を追加
-    const taskText = document.createElement("p");
-    taskText.className = "task-text";
-    taskText.textContent = text;
-    taskItem.append(taskText);
+    taskItem.append(createTaskText(text));
 
     // 朝昼夜ボタンの追加
     timeboxingButtons(taskItem);
@@ -130,7 +171,7 @@ function addTaskToSlot(listSelector){
 
     const submitBtn = document.createElement("button");
     submitBtn.type = "button";
-    submitBtn.textContent = "追加";
+    submitBtn.textContent = "Add";
     submitBtn.className = "inline-add-btn";
 
     // タスク追加処理
@@ -141,10 +182,7 @@ function addTaskToSlot(listSelector){
         const taskItem = document.createElement("li");
         taskItem.className = "task-item";
 
-        const taskText = document.createElement("p");
-        taskText.className = "task-text";
-        taskText.textContent = text;
-        taskItem.append(taskText);
+        taskItem.append(createTaskText(text));
 
         timeboxingButtons(taskItem);
         OrganizationButtons(taskItem);
@@ -174,3 +212,22 @@ document.querySelector("#night-add-task")
     .addEventListener("click", () => addTaskToSlot("#nightList"));
 const addForm = document.querySelector("#add-form");
 addForm.addEventListener("submit", addTask);
+
+// スロット内の並び替え（ドラッグ）
+const slotSortableOptions = {
+    animation: 150,
+    handle: ".task-text",
+    draggable: ".task-item",
+    filter: ".inline-add-form",
+};
+
+for (const [selector, group] of [
+    ["#morningList", "morning"],
+    ["#afternoonList", "afternoon"],
+    ["#nightList", "night"],
+]) {
+    new Sortable(document.querySelector(selector), {
+        ...slotSortableOptions,
+        group,
+    });
+}
