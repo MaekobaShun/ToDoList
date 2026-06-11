@@ -28,42 +28,68 @@
     <div class="container">
         <h1>Todoアプリ</h1>
 
-        <!-- タスク追加フォーム -->
-        <form id="add-form">
-            <input type="text" id="title" name="title" placeholder="やることを入力" required>
-            <button type="submit" id="add-button">Add</button>
-        </form>
-
         <!-- タスク一覧 -->
-        <h2>未分類のタスク</h2>
+        <div class="flex-container">
+            <h2>未分類のタスク</h2>
+            <button type="button" id="unclassified-add-task" class="add-btn">+</button>
+        </div>
         <ul id="taskList"></ul>
         
 
 
 
         <!--朝のグループ-->
-        <div class="flex-container">
-            <h2 id="morning">朝(8:00-12:00)</h2>
-            <button type="button" id="morning-add-task">+</button>
+        <div class="time-group morning-group">
+            <div class="flex-container">
+                <h2 id="morning">朝(8:00-12:00)</h2>
+                <button type="button" id="morning-add-task" class="add-btn">+</button>
+            </div>
+            <ul id="morningList"></ul>
         </div>
-        <ul id="morningList"></ul>
 
         <!--昼のグループ-->
-        <div class="flex-container">
-            <h2 id="afternoon">昼(12:00-18:00)</h2>
-            <button type="button" id="afternoon-add-task">+</button>
+        <div class="time-group afternoon-group">
+            <div class="flex-container">
+                <h2 id="afternoon">昼(12:00-18:00)</h2>
+                <button type="button" id="afternoon-add-task" class="add-btn">+</button>
+            </div>
+            <ul id="afternoonList"></ul>
         </div>
-        <ul id="afternoonList"></ul>
 
         <!--夜のグループ-->
-        <div class="flex-container">
-            <h2 id="night">夜(18:00-24:00)</h2>
-            <button type="button" id="night-add-task">+</button>
+        <div class="time-group night-group">
+            <div class="flex-container">
+                <h2 id="night">夜(18:00-24:00)</h2>
+                <button type="button" id="night-add-task" class="add-btn">+</button>
+            </div>
+            <ul id="nightList"></ul>
         </div>
-        <ul id="nightList"></ul>
 
         <h2>完了したタスク</h2>
         <ul id="doneList"></ul>
+    </div>
+
+    <!-- 右下固定のFAB (Floating Action Button) -->
+    <button id="fab-add-task" class="fab">+</button>
+
+    <!-- ボトムシート (追加・編集用ポップアップ) -->
+    <div id="bottom-sheet-overlay" class="bottom-sheet-overlay"></div>
+    <div id="bottom-sheet" class="bottom-sheet">
+        <div class="bottom-sheet-handle"></div>
+        <form id="sheet-form">
+            <input type="hidden" id="sheet-task-id">
+            <input type="text" id="sheet-title" placeholder="やることを入力" required autocomplete="off">
+            <textarea id="sheet-description" placeholder="詳細説明（任意）" rows="3"></textarea>
+            
+            <div class="sheet-slot-selector">
+                <label><input type="radio" name="sheet-slot" value="未分類" checked><span>未分類</span></label>
+                <label><input type="radio" name="sheet-slot" value="朝"><span>朝</span></label>
+                <label><input type="radio" name="sheet-slot" value="昼"><span>昼</span></label>
+                <label><input type="radio" name="sheet-slot" value="夜"><span>夜</span></label>
+            </div>
+            
+            <button type="submit" id="sheet-submit-btn" class="sheet-submit-btn">↑</button>
+        </form>
     </div>
 </body>
 </html>

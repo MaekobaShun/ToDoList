@@ -10,48 +10,72 @@ db = SQLAlchemy(app)
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
+    description = db.Column(db.Text, nullable=True)
     time_slot = db.Column(db.String(20), default="未分類")
     completed = db.Column(db.Boolean, default=False)
 
-### タスクを表示する　###
-# DBから全てのtodoレコードを取得し、index.htmlテンプレートに渡す
-@app.route("/", methods=["GET", "POST"])
-def home():
-    todo_list = Todo.query.all()
-    return render_template("index.html", todo_list=todo_list)
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "description": self.description,
+            "time_slot": self.time_slot,
+            "completed": self.completed
+        }
 
-### タスク追加 ###
-# titleを貰って、todoを含めてインスタンス化し、dbにadd,commitする
-# dbにcommit後はタスク表示のurlにリダイレクト
-@app.route("/add", methods=["POST"])
-def add():
-    title = request.form.get("title")
-    new_todo = Todo(title=title)
+### タスクを表示する　###
+@app.route("/", methods=["GET"])
+def home():
+    return render_template("index.html")
+
+### APIエンドポイント ###
+from flask import jsonify
+
+@app.route("/api/todos", methods=["GET"])
+def get_todos():
+    todos = Todo.query.all()
+    return jsonify([todo.to_dict() for todo in todos])
+
+@app.route("/api/todos", methods=["POST"])
+def add_todo():
+    data = request.get_json()
+    new_todo = Todo(
+        title=data.get("title"),
+        description=data.get("description"),
+        time_slot=data.get("time_slot", "未分類")
+    )
     db.session.add(new_todo)
     db.session.commit()
-    return redirect(url_for("home"))
+    return jsonify(new_todo.to_dict()), 201
 
-### タスク削除 ###
-# <int:todo_id>はURLの一部を変数として受け取る仕組み
-# 削除は毎回/delete/todo_idのように変化するから変数に入れる
-@app.route("/delete/<int:todo_id>", methods=["POST"])
-def delete(todo_id):
-    todo = Todo.query.filter_by(id=todo_id).first()
+@app.route("/api/todos/<int:todo_id>", methods=["PUT"])
+def update_todo(todo_id):
+    todo = Todo.query.get(todo_id)
+    if not todo:
+        return jsonify({"error": "Not found"}), 404
+    
+    data = request.get_json()
+    if "title" in data:
+        todo.title = data["title"]
+    if "description" in data:
+        todo.description = data["description"]
+    if "time_slot" in data:
+        todo.time_slot = data["time_slot"]
+    if "completed" in data:
+        todo.completed = data["completed"]
+        
+    db.session.commit()
+    return jsonify(todo.to_dict())
+
+@app.route("/api/todos/<int:todo_id>", methods=["DELETE"])
+def delete_todo(todo_id):
+    todo = Todo.query.get(todo_id)
+    if not todo:
+        return jsonify({"error": "Not found"}), 404
+        
     db.session.delete(todo)
     db.session.commit()
-    return redirect(url_for("home"))
-
-@app.route("/move/<int:todo_id>", methods=["POST"])
-def move(todo_id):
-    slot = request.form.get("slot")
-    if slot not in ["朝", "昼", "夜"]:
-        return redirect(url_for("home"))
-
-    todo = Todo.query.filter_by(id=todo_id).first()
-    if todo:
-        todo.time_slot = slot
-        db.session.commit()
-    return redirect(url_for("home"))
+    return jsonify({"success": True})
 
 if __name__ == "__main__":
     # まだDBがなければ作る
